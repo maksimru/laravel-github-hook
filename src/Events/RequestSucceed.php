@@ -6,7 +6,7 @@ use Illuminate\Queue\SerializesModels;
 
 class RequestSucceed
 {
-    use SerializesModels;
+    use SerializesModels, GitData;
 	
 	public $payload;
 
