@@ -2,8 +2,6 @@
 
 namespace HighSolutions\GitHubHook\Services;
 
-use HighSolutions\GitHubHook\Services\GitHubHookCommands;
-
 set_time_limit(0);
 ini_set('memory_limit', '512M');
 
@@ -80,9 +78,11 @@ class GitHubHookService {
 		if ($this->config['branch'] !== $branch)
 			return $this->returnError("Push concerns different branch: '{$branch}'.");
 
-		$response = $this->triggerPull();
-		if($response !== true)
-			return $response;
+        if ($this->config['hooks.pull']) {
+            $response = $this->triggerPull();
+            if ($response !== true)
+                return $response;
+        }
 
 		return [
 			'success' => true,
@@ -164,8 +164,8 @@ class GitHubHookService {
 		$response = $service->receive($payload, $xHubSignature);
 		$service->displayLog($response['message']);
 
-		(new GitHubHookCommands($hooks, $this->config['path']))
-			->handle($this->payload);
+        (new GitHubHookCommands($hooks, $config['path']))
+            ->handle($payload);
 	}
 
 }
