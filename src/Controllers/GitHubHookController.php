@@ -36,6 +36,7 @@ class GitHubHookController
 		$service = new GitHubHookService([
 			'secret' => config('github-hook.secret'),
 			'branch' => config('github-hook.branch'),
+            'pull' => config('github-hook.hooks.pull'),
 			'path' => base_path(),
 		]);
 

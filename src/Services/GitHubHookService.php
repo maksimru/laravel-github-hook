@@ -11,6 +11,7 @@ class GitHubHookService {
 		'secret' => null,
 		'branch' => 'master',
 		'path' => '',
+        'pull' => true,
 	];
 	protected $payload = null;
 
@@ -78,7 +79,7 @@ class GitHubHookService {
 		if ($this->config['branch'] !== $branch)
 			return $this->returnError("Push concerns different branch: '{$branch}'.");
 
-        if ($this->config['hooks.pull']) {
+        if ($this->config['pull']) {
             $response = $this->triggerPull();
             if ($response !== true)
                 return $response;
