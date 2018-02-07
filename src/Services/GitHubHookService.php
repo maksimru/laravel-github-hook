@@ -90,7 +90,7 @@ class GitHubHookService {
             $allowed_branch = $this->config['branch'];
 
         if ($allowed_branch !== $branch)
-            return $this->returnError("Push concerns different branch: '{$branch}'.");
+            return $this->returnError("Push concerns different branch: '{$branch}, allowed: {$allowed_branch} for repo {$this->getRepository()}'.");
 
         if ($this->config['pull']) {
             $response = $this->triggerPull();
