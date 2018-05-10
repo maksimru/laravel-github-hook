@@ -18,7 +18,7 @@ trait GitData
 
     public function getBranch()
     {
-        return substr($this->payload->ref, strlen('refs/heads/'));
+        return substr($this->isTaggedCommit() ? $this->payload->base_ref : $this->payload->ref, strlen('refs/heads/'));
     }
 
     public function getCommitName()
@@ -34,6 +34,16 @@ trait GitData
     public function getSender()
     {
         return $this->payload->head_commit->committer->name;
+    }
+
+    public function isTaggedCommit()
+    {
+        return !is_null($this->payload->base_ref);
+    }
+
+    public function getTag()
+    {
+        return $this->isTaggedCommit() ? substr($this->payload->ref, strlen('refs/tags/')) : null;
     }
 
 }
