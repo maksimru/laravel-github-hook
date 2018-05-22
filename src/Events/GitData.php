@@ -38,7 +38,7 @@ trait GitData
 
     public function isTaggedCommit()
     {
-        return !is_null($this->payload->base_ref);
+        return isset($this->payload->base_ref);
     }
 
     public function getTag()
