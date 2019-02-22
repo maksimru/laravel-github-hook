@@ -38,7 +38,11 @@ trait GitData
 
     public function isTaggedCommit()
     {
-        return isset($this->payload->base_ref);
+        return isset($this->payload->base_ref) && substr(
+                $this->payload->base_ref,
+                0,
+                strlen('refs/tags/')
+            ) == 'refs/tags/';
     }
 
     public function getTag()
